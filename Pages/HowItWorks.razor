@@ -1,0 +1,79 @@
+@page "/how-it-works"
+
+<PageTitle>How It Works</PageTitle>
+
+<section class="home how-it-works">
+    <p class="status">architecture</p>
+    <h1>How It Works</h1>
+    <p class="tagline">How a request reaches this page from home.pefi.co.uk</p>
+
+    <div class="architecture-flow">
+        <div class="flow-step">
+            <div class="step-number">1</div>
+            <h2>DNS Resolution</h2>
+            <p>
+                Your browser looks up <strong>home.pefi.co.uk</strong>. DNSimple returns a
+                CNAME record pointing to the dynamic A record for pefi.co.uk, which resolves
+                to the public IP of the home network. The
+                <a href="https://github.com/petefield/pefi.dynamicdns" target="_blank">pefi.dynamicdns</a>
+                service keeps this A record up to date by polling the public IP every two minutes
+                and pushing changes to DNSimple.
+            </p>
+        </div>
+
+        <div class="flow-connector"></div>
+
+        <div class="flow-step">
+            <div class="step-number">2</div>
+            <h2>Reverse Proxy</h2>
+            <p>
+                The request arrives at the home network and hits
+                <a href="https://github.com/petefield/pefi.proxy" target="_blank">pefi.proxy</a>,
+                a .NET 9 reverse proxy built on YARP. It inspects the <code>Host</code> header
+                (<code>home.pefi.co.uk</code>) and matches it against its route table. Routes are
+                configured both statically and dynamically &mdash; a background service listens for
+                RabbitMQ events from the Service Manager so new services are routable the moment
+                they start, with zero downtime.
+            </p>
+        </div>
+
+        <div class="flow-connector"></div>
+
+        <div class="flow-step">
+            <div class="step-number">3</div>
+            <h2>This Page</h2>
+            <p>
+                The proxy forwards the request to
+                <a href="https://github.com/petefield/pefi.homepage" target="_blank">pefi.homepage</a>,
+                a Blazor WebAssembly app running in a Docker container. The static assets are served
+                to your browser, and from that point Blazor handles all routing client-side &mdash;
+                including the navigation to this page.
+            </p>
+        </div>
+    </div>
+
+    <div class="architecture-diagram">
+        <pre>
+Browser ──&gt; DNS (DNSimple) ──&gt; Home IP
+                                  │
+                            pefi.proxy (YARP)
+                                  │
+                     ┌────────────┼────────────┐
+                     │            │            │
+                  service A   homepage    service B
+                            (this site)
+        </pre>
+    </div>
+
+    <div class="flow-step summary">
+        <h2>Dynamic DNS</h2>
+        <p>
+            The <strong>pefi.dynamicdns</strong> microservice runs alongside everything else. It does two things:
+            it polls the public IP and updates the A record when it changes, and it listens on RabbitMQ for
+            service lifecycle events. When a new service is deployed, it automatically creates a CNAME record
+            so <code>&lt;service&gt;.pefi.co.uk</code> resolves without any manual DNS configuration.
+        </p>
+    </div>
+
+    <a class="nav-link" href="/">Back to Home</a>
+</section>

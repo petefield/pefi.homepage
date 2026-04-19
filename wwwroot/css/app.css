@@ -98,6 +98,134 @@ h1:focus {
     }
 }
 
+/* Navigation links */
+.nav-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #76ffe8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(0, 255, 255, 0.22);
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.6rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(0, 255, 225, 0.1);
+    box-shadow: 0 0 14px rgba(0, 255, 225, 0.3);
+    color: #cbf8ff;
+}
+
+/* How It Works page */
+.how-it-works {
+    text-align: left;
+}
+
+.how-it-works .tagline {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.how-it-works .status {
+    text-align: center;
+}
+
+.architecture-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.flow-step {
+    padding: 1.2rem 0;
+}
+
+.flow-step h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: #cbf8ff;
+    text-shadow: 0 0 10px rgba(95, 194, 255, 0.5);
+}
+
+.flow-step p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b0d7f8;
+}
+
+.flow-step a {
+    color: #76ffe8;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(118, 255, 232, 0.3);
+    transition: border-color 0.2s;
+}
+
+.flow-step a:hover {
+    border-bottom-color: #76ffe8;
+}
+
+.flow-step code {
+    background: rgba(0, 255, 255, 0.08);
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.3rem;
+    font-size: 0.85em;
+    color: #76ffe8;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    color: #76ffe8;
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+    text-shadow: 0 0 8px rgba(0, 255, 225, 0.6);
+}
+
+.flow-connector {
+    width: 1px;
+    height: 1.5rem;
+    background: rgba(0, 255, 255, 0.22);
+    margin-left: 1rem;
+}
+
+.architecture-diagram {
+    margin: 2rem 0;
+    padding: 1.2rem;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    border-radius: 0.8rem;
+    background: rgba(0, 0, 0, 0.3);
+    overflow-x: auto;
+}
+
+.architecture-diagram pre {
+    margin: 0;
+    color: #76ffe8;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    font-family: "Cascadia Code", "Fira Code", monospace;
+}
+
+.flow-step.summary {
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 255, 255, 0.12);
+}
+
+.how-it-works > .nav-link {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+}
+
 #blazor-error-ui {
     background: #3b0e11;
     color: #fff;
