@@ -36,15 +36,15 @@ h1:focus {
 
 @media (max-width: 640px) {
     .home {
-        width: calc(100% - 2rem);
-        margin: 0 1rem;
+        width: calc(100% - 4rem);
+        margin: 0 2rem;
     }
 }
 
 @media (max-width: 480px) {
     .home {
-        width: calc(100% - 1rem);
-        margin: 0 0.5rem;
+        width: calc(100% - 3rem);
+        margin: 0 1.5rem;
     }
 }
 
