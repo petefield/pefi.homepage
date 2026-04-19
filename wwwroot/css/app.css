@@ -34,6 +34,20 @@ h1:focus {
     backdrop-filter: blur(6px);
 }
 
+@media (max-width: 640px) {
+    .home {
+        width: calc(100% - 2rem);
+        margin: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home {
+        width: calc(100% - 1rem);
+        margin: 0 0.5rem;
+    }
+}
+
 .status {
     margin: 0 0 1rem;
     text-transform: uppercase;
