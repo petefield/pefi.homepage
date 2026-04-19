@@ -21,6 +21,8 @@ Then browse to <http://localhost:8080>.
 
 GitHub Actions workflow: `.github/workflows/docker-publish.yml`
 
+Published image repository: `petefield/pefi.home`
+
 Required repository secrets:
 
 - `DOCKERHUB_USERNAME`
