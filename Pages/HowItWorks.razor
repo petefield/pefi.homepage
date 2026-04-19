@@ -53,16 +53,140 @@
     </div>
 
     <div class="architecture-diagram">
-        <pre>
-Browser ──&gt; DNS (DNSimple) ──&gt; Home IP
-                                  │
-                            pefi.proxy (YARP)
-                                  │
-                     ┌────────────┼────────────┐
-                     │            │            │
-                  service A   homepage    service B
-                            (this site)
-        </pre>
+        <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" class="arch-svg">
+            <defs>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+                <filter id="glow-strong">
+                    <feGaussianBlur stdDeviation="6" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+                <linearGradient id="line-grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#76ffe8" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#5fc2ff" stop-opacity="0.4" />
+                </linearGradient>
+                <linearGradient id="node-fill" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="rgba(4, 9, 30, 0.9)" />
+                    <stop offset="100%" stop-color="rgba(5, 20, 44, 0.7)" />
+                </linearGradient>
+                <radialGradient id="pulse-grad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#00ffe1" stop-opacity="0.3" />
+                    <stop offset="100%" stop-color="#00ffe1" stop-opacity="0" />
+                </radialGradient>
+            </defs>
+
+            <!-- Animated data particles along the main path -->
+            <circle class="data-particle particle-1" r="3" fill="#76ffe8" filter="url(#glow)">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M 280,52 L 280,102 L 280,162 L 280,232 L 280,302" />
+            </circle>
+            <circle class="data-particle particle-2" r="2" fill="#5fc2ff" filter="url(#glow)">
+                <animateMotion dur="3s" repeatCount="indefinite" begin="1s" path="M 280,52 L 280,102 L 280,162 L 280,232 L 280,302" />
+            </circle>
+            <circle class="data-particle particle-3" r="2" fill="#a44aff" filter="url(#glow)">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.5s" path="M 280,232 L 280,302 L 120,370" />
+            </circle>
+            <circle class="data-particle particle-4" r="2" fill="#a44aff" filter="url(#glow)">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="2s" path="M 280,232 L 280,302 L 440,370" />
+            </circle>
+
+            <!-- Connection lines -->
+            <line x1="280" y1="52" x2="280" y2="102" stroke="url(#line-grad)" stroke-width="2" filter="url(#glow)" class="conn-line" />
+            <line x1="280" y1="152" x2="280" y2="172" stroke="url(#line-grad)" stroke-width="2" filter="url(#glow)" class="conn-line" />
+            <line x1="280" y1="222" x2="280" y2="242" stroke="url(#line-grad)" stroke-width="2" filter="url(#glow)" class="conn-line" />
+            <line x1="280" y1="292" x2="280" y2="312" stroke="url(#line-grad)" stroke-width="2" filter="url(#glow)" class="conn-line" />
+
+            <!-- Fan-out lines from proxy to services -->
+            <line x1="280" y1="342" x2="120" y2="370" stroke="url(#line-grad)" stroke-width="1.5" filter="url(#glow)" class="conn-line" />
+            <line x1="280" y1="342" x2="280" y2="370" stroke="url(#line-grad)" stroke-width="2" filter="url(#glow)" class="conn-line" />
+            <line x1="280" y1="342" x2="440" y2="370" stroke="url(#line-grad)" stroke-width="1.5" filter="url(#glow)" class="conn-line" />
+
+            <!-- DynDNS side connection -->
+            <line x1="380" y1="127" x2="460" y2="127" stroke="#a44aff" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#glow)" opacity="0.6" class="conn-line" />
+            <line x1="510" y1="147" x2="510" y2="172" stroke="#a44aff" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#glow)" opacity="0.6" class="conn-line" />
+
+            <!-- Browser node -->
+            <g class="node">
+                <rect x="220" y="12" width="120" height="40" rx="8" fill="url(#node-fill)" stroke="#76ffe8" stroke-width="1.5" filter="url(#glow)" />
+                <text x="280" y="37" text-anchor="middle" fill="#cbf8ff" font-size="13" font-family="Inter, sans-serif">Browser</text>
+            </g>
+
+            <!-- DNS node -->
+            <g class="node">
+                <rect x="200" y="102" width="160" height="50" rx="8" fill="url(#node-fill)" stroke="#5fc2ff" stroke-width="1.5" filter="url(#glow)" />
+                <text x="280" y="124" text-anchor="middle" fill="#76ffe8" font-size="11" font-family="Inter, sans-serif" font-weight="600">DNSimple</text>
+                <text x="280" y="141" text-anchor="middle" fill="#b0d7f8" font-size="10" font-family="Inter, sans-serif">home.pefi.co.uk</text>
+            </g>
+
+            <!-- DynDNS node (side) -->
+            <g class="node">
+                <rect x="460" y="102" width="100" height="45" rx="8" fill="url(#node-fill)" stroke="#a44aff" stroke-width="1.2" filter="url(#glow)" opacity="0.8" />
+                <text x="510" y="121" text-anchor="middle" fill="#a44aff" font-size="10" font-family="Inter, sans-serif" font-weight="600">dynamicdns</text>
+                <text x="510" y="136" text-anchor="middle" fill="#b0d7f8" font-size="9" font-family="Inter, sans-serif">IP monitor</text>
+                <!-- Pulsing indicator -->
+                <circle cx="470" cy="112" r="3" fill="#a44aff" opacity="0.8">
+                    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+                </circle>
+            </g>
+
+            <!-- Home IP node -->
+            <g class="node">
+                <rect x="210" y="172" width="140" height="50" rx="8" fill="url(#node-fill)" stroke="#76ffe8" stroke-width="1.5" filter="url(#glow)" />
+                <text x="280" y="194" text-anchor="middle" fill="#76ffe8" font-size="11" font-family="Inter, sans-serif" font-weight="600">Home Network</text>
+                <text x="280" y="211" text-anchor="middle" fill="#b0d7f8" font-size="10" font-family="Inter, sans-serif">Public IP</text>
+                <!-- Animated ring -->
+                <circle cx="280" cy="197" r="28" fill="none" stroke="#76ffe8" stroke-width="0.5" opacity="0.2">
+                    <animate attributeName="r" values="28;34;28" dur="3s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite" />
+                </circle>
+            </g>
+
+            <!-- Proxy node -->
+            <g class="node">
+                <rect x="200" y="242" width="160" height="50" rx="8" fill="url(#node-fill)" stroke="#5fc2ff" stroke-width="1.5" filter="url(#glow)" />
+                <text x="280" y="264" text-anchor="middle" fill="#5fc2ff" font-size="11" font-family="Inter, sans-serif" font-weight="600">pefi.proxy</text>
+                <text x="280" y="281" text-anchor="middle" fill="#b0d7f8" font-size="10" font-family="Inter, sans-serif">YARP Reverse Proxy</text>
+            </g>
+
+            <!-- Router hub -->
+            <circle cx="280" cy="327" r="10" fill="url(#node-fill)" stroke="#5fc2ff" stroke-width="1" filter="url(#glow)" />
+            <circle cx="280" cy="327" r="3" fill="#5fc2ff" filter="url(#glow-strong)">
+                <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite" />
+            </circle>
+
+            <!-- Service A -->
+            <g class="node">
+                <rect x="60" y="370" width="120" height="40" rx="8" fill="url(#node-fill)" stroke="rgba(0,255,255,0.3)" stroke-width="1" filter="url(#glow)" opacity="0.7" />
+                <text x="120" y="394" text-anchor="middle" fill="#b0d7f8" font-size="10" font-family="Inter, sans-serif">service A</text>
+            </g>
+
+            <!-- Homepage (highlighted) -->
+            <g class="node node-active">
+                <rect x="215" y="370" width="130" height="40" rx="8" fill="url(#node-fill)" stroke="#76ffe8" stroke-width="2" filter="url(#glow-strong)" />
+                <text x="280" y="394" text-anchor="middle" fill="#76ffe8" font-size="11" font-family="Inter, sans-serif" font-weight="600">homepage</text>
+                <!-- Active glow ring -->
+                <circle cx="280" cy="390" r="24" fill="none" stroke="#76ffe8" stroke-width="0.8" opacity="0.15">
+                    <animate attributeName="r" values="24;32;24" dur="2.5s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.15;0;0.15" dur="2.5s" repeatCount="indefinite" />
+                </circle>
+            </g>
+
+            <!-- Service B -->
+            <g class="node">
+                <rect x="380" y="370" width="120" height="40" rx="8" fill="url(#node-fill)" stroke="rgba(0,255,255,0.3)" stroke-width="1" filter="url(#glow)" opacity="0.7" />
+                <text x="440" y="394" text-anchor="middle" fill="#b0d7f8" font-size="10" font-family="Inter, sans-serif">service B</text>
+            </g>
+
+            <!-- DynDNS to DNSimple connection -->
+            <line x1="510" y1="192" x2="510" y2="220" stroke="#a44aff" stroke-width="1" stroke-dasharray="4 3" filter="url(#glow)" opacity="0.4" />
+        </svg>
     </div>
 
     <div class="flow-step summary">

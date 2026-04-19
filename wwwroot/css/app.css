@@ -203,15 +203,43 @@ h1:focus {
     border: 1px solid rgba(0, 255, 255, 0.15);
     border-radius: 0.8rem;
     background: rgba(0, 0, 0, 0.3);
-    overflow-x: auto;
+    overflow: hidden;
 }
 
-.architecture-diagram pre {
-    margin: 0;
-    color: #76ffe8;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    font-family: "Cascadia Code", "Fira Code", monospace;
+.arch-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.arch-svg .node rect {
+    transition: filter 0.3s ease;
+}
+
+.arch-svg .node:hover rect {
+    filter: url(#glow-strong);
+}
+
+.arch-svg .conn-line {
+    animation: line-pulse 3s ease-in-out infinite;
+}
+
+@keyframes line-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.arch-svg .data-particle {
+    opacity: 0.9;
+}
+
+.arch-svg .node-active rect {
+    animation: active-glow 2s ease-in-out infinite;
+}
+
+@keyframes active-glow {
+    0%, 100% { filter: url(#glow); }
+    50% { filter: url(#glow-strong); }
 }
 
 .flow-step.summary {
